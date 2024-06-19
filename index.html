@@ -48,6 +48,7 @@ $("#text").
 <div id="qr-reader-results"></div>
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script>
+    var students = {};
     function docReady(fn) {
         // see if DOM is already available
         if (document.readyState === "complete"
@@ -67,7 +68,10 @@ $("#text").
                 ++countResults;
                 lastResult = decodedText;
                 // Handle on success condition with the decoded message.
-                console.log(`Scan result ${decodedText}`, decodedResult);
+                // console.log(`Scan result ${decodedText}`, decodedResult);
+                students.append({'id':students.length + 1,'name':decodedText});
+                console.log("Students:");
+                console.log(students);
             }
         }
 
