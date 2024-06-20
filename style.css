@@ -1,0 +1,9 @@
+#qrcode {
+    padding-bottom: 10px;
+}
+#tag {
+    text-align: center;
+    width: min-content;
+    padding: 50px;
+    
+}
