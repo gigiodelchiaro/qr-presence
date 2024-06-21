@@ -1,9 +1,36 @@
-#qrcode {
-    padding-bottom: 10px;
+.qrcodes {
+    height: min-content;
+    display: inline-block;
+    padding: 2%;
+    border: 1px black dashed;
+    border-bottom: 0;
+    border-right: 0;
 }
-#tag {
+@media print {
+    .hide-print {
+        display: none !important;
+    }
+    body {
+        margin: 0;
+        height: min-content;
+    }
+    #tags {
+        border: 0;
+    }
+}
+#tags {
+    width: 210mm;
+    height: 297mm;
+    border: 2px black solid;
+}
+#content {
     text-align: center;
-    width: min-content;
-    padding: 50px;
-    
+}
+#header {
+    height: 45px;
+    text-align: center;
+}
+#title-clean {
+    padding: 0;
+    margin: 0;
 }

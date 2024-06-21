@@ -9,44 +9,53 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<input id="text" type="text" value="Insira o nome" style="width:80%" /><br />
-<div id="tag">
-<div id="qrcode"></div>
-<div id="content"></div>
+<input id="amount" type="number" value="5" class="hide-print">
+<input id="divide" type="number" value="5" class="hide-print">
+<input id="classroom" type="text" placeholder="Insira a sala" value="A" class="hide-print">
+<button onclick="generateQR()" class="hide-print" >Generate</button>
+
+<div id="tags">
+<div id="header"><h1 id="title-clean">QR Codes</h1></div>
 </div>
 <script type="text/javascript">
-var qrcode = new QRCode(document.getElementById("qrcode"), {
-	width: 128,
-	height: 128,
-	colorDark : "#000000",
-	colorLight : "#ffffff",
-	correctLevel : QRCode.CorrectLevel.H
-});
-
-function makeCode () {		
-	var elText = document.getElementById("text");
-	document.getElementById("content").innerText = elText.value;
-	if (!elText.value) {
-		alert("Input a text");
-		elText.focus();
-		return;
-	}
+function makeCode (qrcode, num, tag) {		
+	var elText = document.getElementById("classroom");
 	
-	qrcode.makeCode(elText.value);
-	
+	var content = document.createElement("div");
+	content.id = "content";
+	content.innerText = `${num}` + elText.value;
+	qrcode.makeCode(`${num}` + elText.value);
+	tag.appendChild(content);
 }
 
-makeCode();
-
-$("#text").
-	on("blur", function () {
-		makeCode();
-	}).
-	on("keydown", function (e) {
-		if (e.keyCode == 13) {
-			makeCode();
-		}
+function generateQR() {
+	var amount =  document.getElementById("amount").value;
+	var divide = document.getElementById("divide").value;
+	var tags = document.getElementById("tags");
+	var size = (tags.clientWidth*(1 - 0.04*divide) - divide - 1)/ divide;
+	
+for (let i = 0; i < amount; i++) {
+	var qr = document.createElement("qr");
+	console.log(qr.style.width);
+	if (i % divide == 0) {
+		qr.style.borderLeft = 0;
+	}
+	qr.id = "qr" + i.toString();
+	qr.className = "qrcodes";
+	
+	tags.appendChild(qr);
+	var qrcode = new QRCode(qr, {
+	colorDark : "#000000",
+	colorLight : "#ffffff",
+	correctLevel : QRCode.CorrectLevel.H,
+	useSVG:true
 	});
+
+	makeCode(qrcode, i + 1, qr);
+	qr.setAttribute("style",`width: ${size}px`);
+	}
+	
+}
 </script>
-<a href="index.html">Voltar</a>
+<a href="index.html" class="hide-print">Voltar</a>
 </body>
